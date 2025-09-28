@@ -222,40 +222,113 @@
   <p><strong>Telefon comenzi: 0739 363 307/0758 062 188</strong></p>
 </section>
 
-<section id="contact">
+ <section id="contact">
   <h2>Comandă Produse</h2>
-  <p>Completează formularul de mai jos pentru a comanda. După primirea comenzii, te vom contacta pentru confirmare și detalii plata/livrare.</p>
-  <form action="mailto:adresa.ta@email.com" method="post" enctype="text/plain">
-    <label for="nume">Nume complet:</label>
-    <input type="text" id="nume" name="nume" required />
+  <p>Completează formularul de mai jos pentru a comanda. După primirea comenzii, te vom contacta pentru confirmare și detalii plată/livrare.</p>
 
-    <label for="telefon">Număr telefon:</label>
-    <input type="tel" id="telefon" name="telefon" required />
+  <form id="comandaProfesional" action="https://formspree.io/f/your-form-id" method="POST" autocomplete="on">
+    <div class="form-group">
+      <label for="nume">Nume complet:</label>
+      <input type="text" id="nume" name="nume" placeholder="Ex: Ion Popescu" required>
+    </div>
 
-    <label for="produs">Produs:</label>
-    <select id="produs" name="produs" required>
-      <option value="">-- Alege produsul --</option>
-      <option value="Miere de mană">Miere de mană</option>
-      <option value="Miere polifloră">Miere polifloră</option>
-      <option value="Miere salcâm">Miere salcâm</option>
-      <option value="Miere floarea soarelui">Miere floarea soarelui</option>
-      <option value="Faguri">Faguri</option>
-      <option value="Polen">Polen</option>
-      <option value="Propolis">Propolis</option>
-    </select>
+    <div class="form-group">
+      <label for="telefon">Număr telefon:</label>
+      <input type="tel" id="telefon" name="telefon" placeholder="Ex: 0739123456" required>
+    </div>
 
-    <label for="cantitate">Cantitate (ex: 1 borcan 500g):</label>
-    <input type="text" id="cantitate" name="cantitate" required />
+    <div class="form-group">
+      <label for="produs">Produs:</label>
+      <select id="produs" name="produs" required>
+        <option value="">-- Alege produsul --</option>
+        <option value="Miere de mană">Miere de mană</option>
+        <option value="Miere polifloră">Miere polifloră</option>
+        <option value="Miere salcâm">Miere salcâm</option>
+        <option value="Miere floarea soarelui">Miere floarea soarelui</option>
+        <option value="Faguri">Faguri</option>
+        <option value="Polen">Polen</option>
+        <option value="Propolis">Propolis</option>
+      </select>
+    </div>
 
-    <label for="adresa">Adresă livrare (opțional):</label>
-    <textarea id="adresa" name="adresa" rows="3"></textarea>
+    <div class="form-group">
+      <label for="cantitate">Cantitate:</label>
+      <input type="text" id="cantitate" name="cantitate" placeholder="Ex: 1 borcan 500g" required>
+    </div>
+
+    <div class="form-group">
+      <label for="adresa">Adresă livrare (opțional):</label>
+      <textarea id="adresa" name="adresa" rows="3" placeholder="Strada, Nr., Oraș"></textarea>
+    </div>
 
     <button type="submit">Trimite Comanda</button>
+    <div class="success-message" id="successMessage">Comanda a fost trimisă cu succes!</div>
   </form>
-  <p><strong>Telefon comenzi:</strong> 0739 363 307/ 0758 062 188</p>
-  <p><strong>Email:</strong>vasile_varlan@yahoo.com </p>
-  <p><strong>Email:</strong>manolacheiustin8@gmail.com </p>
+
+  <p><strong>Telefon comenzi:</strong> 0739 363 307 / 0758 062 188</p>
+  <p><strong>Email:</strong> vasile_varlan@yahoo.com</p>
+  <p><strong>Email:</strong> manolacheiustin8@gmail.com</p>
   <p><strong>Metodă plată:</strong> Transfer bancar sau ramburs, după confirmarea comenzii.</p>
+
+  <style>
+    #contact { font-family: Arial, sans-serif; max-width: 600px; margin: auto; padding: 20px; }
+    h2 { text-align: center; color: #333; }
+    .form-group { margin-bottom: 15px; }
+    label { display: block; margin-bottom: 5px; font-weight: bold; color: #555; }
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background-color: #28a745;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover { background-color: #218838; }
+    .success-message {
+      display: none;
+      margin-top: 10px;
+      text-align: center;
+      font-weight: bold;
+      color: #28a745;
+    }
+  </style>
+
+  <script>
+    const form = document.getElementById('comandaProfesional');
+    const successMessage = document.getElementById('successMessage');
+
+    form.addEventListener('submit', function(event) {
+      event.preventDefault();
+      const formData = new FormData(form);
+
+      fetch(form.action, {
+        method: form.method,
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      }).then(response => {
+        if (response.ok) {
+          form.reset();
+          successMessage.style.display = 'block';
+          setTimeout(() => { successMessage.style.display = 'none'; }, 5000);
+        } else {
+          alert("Oops! Ceva nu a mers, încearcă din nou.");
+        }
+      }).catch(error => {
+        alert("Oops! Ceva nu a mers, încearcă din nou.");
+      });
+    });
+  </script>
 </section>
 
 <footer>
